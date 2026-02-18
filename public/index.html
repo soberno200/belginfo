@@ -4,26 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BelgInfo — Données entreprises belges</title>
-<meta name="description" content="Recherchez n'importe quelle entreprise belge : infos BCE, gérants, chiffre d'affaires et résultat net gratuitement.">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#f7f5f0; --surface:#fff; --surface2:#f0ede6; --border:#e2ddd5;
-  --text:#1a1714; --muted:#8a847a; --accent:#c0392b; --green:#27ae60;
-  --blue:#2980b9; --gold:#d4a017;
-  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);
-}
+:root{--bg:#f7f5f0;--surface:#fff;--surface2:#f0ede6;--border:#e2ddd5;--text:#1a1714;--muted:#8a847a;--accent:#c0392b;--green:#27ae60;--blue:#2980b9;--gold:#d4a017;--shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-serif;min-height:100vh;}
-
 header{background:var(--text);padding:0 48px;height:62px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
 .logo{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:21px;color:#fff;letter-spacing:-.5px;}
 .logo .dot{color:var(--accent);}
-.api-btn{display:flex;align-items:center;gap:8px;font-size:12px;color:#888;cursor:pointer;padding:7px 14px;border:1px solid #333;border-radius:8px;background:none;font-family:'Instrument Sans',sans-serif;transition:border-color .2s;}
-.api-btn:hover{border-color:#666;}
-.api-dot{width:8px;height:8px;border-radius:50%;background:#444;transition:background .3s;}
+.api-btn{display:flex;align-items:center;gap:8px;font-size:12px;color:#888;cursor:pointer;padding:7px 14px;border:1px solid #333;border-radius:8px;background:none;font-family:'Instrument Sans',sans-serif;}
+.api-dot{width:8px;height:8px;border-radius:50%;background:#444;}
 .api-dot.ok{background:var(--green);box-shadow:0 0 0 2px rgba(39,174,96,.25);}
-
 .hero{background:var(--text);padding:60px 48px 68px;overflow:hidden;position:relative;}
 .hero::after{content:'BE';position:absolute;right:-10px;top:-30px;font-family:'Bricolage Grotesque',sans-serif;font-size:280px;font-weight:800;color:rgba(255,255,255,.025);pointer-events:none;line-height:1;}
 .hero-inner{max-width:880px;margin:0 auto;}
@@ -31,96 +22,67 @@ header{background:var(--text);padding:0 48px;height:62px;display:flex;align-item
 .hero h1{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(38px,6vw,68px);font-weight:800;color:#fff;line-height:1;letter-spacing:-2px;margin-bottom:18px;}
 .hero h1 .outline{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.35);}
 .hero-sub{color:#777;font-size:16px;margin-bottom:40px;line-height:1.6;max-width:500px;}
-
 .search-box{display:flex;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 28px rgba(0,0,0,.35);max-width:600px;}
 .search-icon{display:flex;align-items:center;padding:0 18px;color:#bbb;font-size:18px;}
 .search-input{flex:1;padding:18px 0;font-family:'Instrument Sans',sans-serif;font-size:15px;color:var(--text);border:none;outline:none;background:transparent;}
 .search-input::placeholder{color:#ccc;}
-.search-btn{background:var(--accent);color:#fff;border:none;padding:0 26px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:background .2s;white-space:nowrap;}
+.search-btn{background:var(--accent);color:#fff;border:none;padding:0 26px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;cursor:pointer;}
 .search-btn:hover{background:#e74c3c;}
 .quick-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
-.quick-tag{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#999;padding:5px 12px;border-radius:20px;font-size:12px;cursor:pointer;transition:all .2s;}
+.quick-tag{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#999;padding:5px 12px;border-radius:20px;font-size:12px;cursor:pointer;}
 .quick-tag:hover{background:rgba(255,255,255,.13);color:#fff;}
-
 .main{max-width:980px;margin:0 auto;padding:36px 48px 80px;}
-
 .results-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
 .results-count{font-size:13px;color:var(--muted);}
 .results-count strong{color:var(--text);font-size:15px;font-family:'Bricolage Grotesque',sans-serif;}
-
 .company-list{display:flex;flex-direction:column;gap:8px;}
 .company-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:all .18s;box-shadow:var(--shadow);animation:fadeUp .3s ease both;}
-.company-card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 6px 24px rgba(192,57,43,.08);}
+.company-card:hover{border-color:var(--accent);transform:translateY(-1px);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.card-name{font-family:'Bricolage Grotesque',sans-serif;font-size:16px;font-weight:700;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-name{font-family:'Bricolage Grotesque',sans-serif;font-size:16px;font-weight:700;margin-bottom:5px;}
 .card-meta{display:flex;gap:10px;flex-wrap:wrap;}
 .meta-chip{font-size:12px;color:var(--muted);}
 .status-badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;white-space:nowrap;}
 .s-active{background:#e8f8ef;color:var(--green);}
 .s-inactive{background:#fdecea;color:var(--accent);}
-.card-arrow{color:#ddd;font-size:22px;font-weight:300;flex-shrink:0;}
-
-.back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;cursor:pointer;background:none;border:none;font-family:'Instrument Sans',sans-serif;transition:color .2s;margin-bottom:28px;padding:0;}
+.card-arrow{color:#ddd;font-size:22px;flex-shrink:0;}
+.back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;cursor:pointer;background:none;border:none;font-family:'Instrument Sans',sans-serif;margin-bottom:28px;padding:0;}
 .back-btn:hover{color:var(--accent);}
 .detail-name{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(26px,4vw,46px);font-weight:800;letter-spacing:-1.5px;line-height:1.05;}
 .detail-sub{font-size:13px;color:var(--muted);margin-top:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .detail-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;}
 .action-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--muted);text-decoration:none;transition:all .2s;background:var(--surface);cursor:pointer;font-family:'Instrument Sans',sans-serif;}
 .action-btn:hover{border-color:var(--accent);color:var(--accent);}
-
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px;margin:28px 0;}
-.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow);animation:fadeUp .35s ease both;}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow);}
 .kpi-bar{width:28px;height:3px;border-radius:2px;background:var(--accent);margin-bottom:12px;}
 .kpi-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
-.kpi-val{font-family:'Bricolage Grotesque',sans-serif;font-size:24px;font-weight:800;letter-spacing:-1px;line-height:1;}
+.kpi-val{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;font-weight:800;letter-spacing:-1px;line-height:1;}
 .kpi-sub{font-size:11px;color:var(--muted);margin-top:5px;}
-.c-green{color:var(--green);} .c-red{color:var(--accent);} .c-blue{color:var(--blue);}
-
+.c-green{color:var(--green);}.c-red{color:var(--accent);}.c-blue{color:var(--blue);}
 .section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:14px;box-shadow:var(--shadow);}
 .sec-title{font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px;}
-.sec-badge{margin-left:auto;background:var(--surface2);color:var(--muted);font-size:11px;padding:3px 8px;border-radius:6px;font-family:'Instrument Sans',sans-serif;}
-
+.sec-badge{margin-left:auto;background:var(--surface2);color:var(--muted);font-size:11px;padding:3px 8px;border-radius:6px;}
 .fin-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--border);}
 .fin-row:last-child{border-bottom:none;}
 .fin-lbl{width:190px;font-size:13px;color:var(--muted);flex-shrink:0;}
 .fin-bar-bg{flex:1;height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;}
-.fin-bar-fill{height:100%;border-radius:3px;transition:width .9s cubic-bezier(.4,0,.2,1);}
-.fin-bar-pos{background:var(--green);} .fin-bar-neg{background:var(--accent);}
+.fin-bar-fill{height:100%;border-radius:3px;}
+.fin-bar-pos{background:var(--green);}.fin-bar-neg{background:var(--accent);}
 .fin-val{font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:700;min-width:95px;text-align:right;}
-
-.chart-bars{display:flex;align-items:flex-end;gap:10px;height:110px;margin-top:16px;}
-.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
-.bar-outer{width:100%;background:var(--surface2);border-radius:5px 5px 0 0;height:90px;display:flex;align-items:flex-end;overflow:hidden;}
-.bar-inner{width:100%;border-radius:5px 5px 0 0;transition:height .9s cubic-bezier(.4,0,.2,1);min-height:2px;}
-.bar-rev{background:linear-gradient(180deg,#3498db,#2980b9);}
-.bar-profit{background:linear-gradient(180deg,#2ecc71,#27ae60);}
-.bar-loss{background:linear-gradient(180deg,#e74c3c,#c0392b);}
-.bar-year{font-size:11px;color:var(--muted);font-weight:500;}
-.chart-legend{display:flex;gap:14px;margin-top:10px;flex-wrap:wrap;}
-.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);}
-.leg-dot{width:10px;height:10px;border-radius:2px;}
-
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 @media(max-width:680px){.two-col{grid-template-columns:1fr;}}
 .info-tr{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;gap:10px;}
 .info-tr:last-child{border-bottom:none;}
-.i-l{color:var(--muted);flex-shrink:0;} .i-r{font-weight:500;text-align:right;word-break:break-word;}
-
-.mgr-list{display:flex;flex-direction:column;gap:9px;}
-.mgr-item{display:flex;align-items:center;gap:13px;padding:10px 13px;background:var(--surface2);border-radius:10px;}
-.mgr-av{width:38px;height:38px;border-radius:50%;background:var(--text);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;font-size:13px;font-weight:700;flex-shrink:0;}
-.mgr-name{font-size:13px;font-weight:500;} .mgr-role{font-size:11px;color:var(--muted);margin-top:2px;}
-
+.i-l{color:var(--muted);flex-shrink:0;}.i-r{font-weight:500;text-align:right;word-break:break-word;}
 .loading-wrap{text-align:center;padding:70px 20px;color:var(--muted);}
 .spinner{width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .empty-wrap{text-align:center;padding:100px 20px;}
 .empty-icon{font-size:60px;opacity:.12;margin-bottom:14px;}
 .empty-txt{color:var(--muted);font-size:15px;}
-
 .warn-banner{background:#fff8e1;border:1px solid #ffe082;border-radius:12px;padding:15px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;color:#7d6608;flex-wrap:wrap;}
-.warn-btn{background:#f39c12;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Bricolage Grotesque',sans-serif;}
-
+.warn-btn{background:#f39c12;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
 .modal-bg.open{opacity:1;pointer-events:all;}
 .modal{background:var(--surface);border-radius:20px;padding:40px;width:90%;max-width:500px;box-shadow:0 8px 40px rgba(0,0,0,.12);transform:translateY(20px);transition:transform .2s;}
@@ -130,15 +92,13 @@ header{background:var(--text);padding:0 48px;height:62px;display:flex;align-item
 .steps{background:var(--surface2);border-radius:12px;padding:16px 18px;margin-bottom:20px;font-size:13px;line-height:2.1;color:#666;}
 .steps a{color:var(--accent);}
 .steps strong{color:var(--text);}
-.key-input{width:100%;padding:13px 15px;border:1.5px solid var(--border);border-radius:10px;font-family:monospace;font-size:13px;color:var(--text);outline:none;margin-bottom:10px;transition:border-color .2s;}
+.key-input{width:100%;padding:13px 15px;border:1.5px solid var(--border);border-radius:10px;font-family:monospace;font-size:13px;color:var(--text);outline:none;margin-bottom:10px;}
 .key-input:focus{border-color:var(--accent);}
 .key-input::placeholder{color:#bbb;}
 .modal-note{font-size:11px;color:#bbb;margin-bottom:18px;}
 .modal-btns{display:flex;gap:10px;}
 .btn-main{flex:1;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:13px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;cursor:pointer;}
-.btn-main:hover{background:#e74c3c;}
 .btn-sec{background:var(--surface2);color:var(--text);border:none;border-radius:10px;padding:13px 18px;font-family:'Instrument Sans',sans-serif;font-size:14px;cursor:pointer;}
-
 .toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;z-index:999;animation:fadeUp .3s ease;}
 .hidden{display:none!important;}
 @media(max-width:768px){header{padding:0 20px;}.hero{padding:40px 20px 50px;}.main{padding:24px 20px 60px;}}
@@ -166,11 +126,11 @@ header{background:var(--text);padding:0 48px;height:62px;display:flex;align-item
     </div>
     <div class="quick-tags">
       <span style="color:#555;font-size:12px;line-height:2.2">Exemples :</span>
-      <span class="quick-tag" onclick="q('Colruyt')">Colruyt</span>
-      <span class="quick-tag" onclick="q('Proximus')">Proximus</span>
-      <span class="quick-tag" onclick="q('Solvay')">Solvay</span>
-      <span class="quick-tag" onclick="q('Bekaert')">Bekaert</span>
-      <span class="quick-tag" onclick="q('Delhaize')">Delhaize</span>
+      <span class="quick-tag" onclick="qs('Colruyt')">Colruyt</span>
+      <span class="quick-tag" onclick="qs('Proximus')">Proximus</span>
+      <span class="quick-tag" onclick="qs('Solvay')">Solvay</span>
+      <span class="quick-tag" onclick="qs('Bekaert')">Bekaert</span>
+      <span class="quick-tag" onclick="qs('Delhaize')">Delhaize</span>
     </div>
   </div>
 </div>
@@ -199,7 +159,7 @@ header{background:var(--text);padding:0 48px;height:62px;display:flex;align-item
       6. Colle-la ici 👇
     </div>
     <input type="password" class="key-input" id="keyInput" placeholder="Colle ta clé ici..."/>
-    <div class="modal-note">🔒 Stockée uniquement dans ton navigateur, jamais partagée.</div>
+    <div class="modal-note">🔒 Stockée uniquement dans ton navigateur.</div>
     <div class="modal-btns">
       <button class="btn-main" onclick="saveKey()">Sauvegarder</button>
       <button class="btn-sec" onclick="closeModal()">Fermer</button>
@@ -208,208 +168,156 @@ header{background:var(--text);padding:0 48px;height:62px;display:flex;align-item
 </div>
 
 <script>
+// ── CLÉ BNB ──
 let nbbKey = localStorage.getItem('nbb_key') || '';
 updateKeyUI();
-
-function updateKeyUI() {
-  document.getElementById('apiDot').className = 'api-dot' + (nbbKey ? ' ok' : '');
-  document.getElementById('apiLabel').textContent = nbbKey ? '✓ BNB active' : 'Clé BNB';
+function updateKeyUI(){
+  document.getElementById('apiDot').className='api-dot'+(nbbKey?' ok':'');
+  document.getElementById('apiLabel').textContent=nbbKey?'✓ BNB active':'Clé BNB';
 }
-function openModal() { document.getElementById('modalBg').classList.add('open'); if (nbbKey) document.getElementById('keyInput').value = nbbKey; }
-function closeModal() { document.getElementById('modalBg').classList.remove('open'); }
-function saveKey() {
-  const k = document.getElementById('keyInput').value.trim();
-  if (!k) return;
-  nbbKey = k; localStorage.setItem('nbb_key', k); updateKeyUI(); closeModal(); toast('✓ Clé BNB sauvegardée !');
+function openModal(){document.getElementById('modalBg').classList.add('open');if(nbbKey)document.getElementById('keyInput').value=nbbKey;}
+function closeModal(){document.getElementById('modalBg').classList.remove('open');}
+function saveKey(){
+  const k=document.getElementById('keyInput').value.trim();
+  if(!k)return;
+  nbbKey=k;localStorage.setItem('nbb_key',k);updateKeyUI();closeModal();toast('✓ Clé BNB sauvegardée !');
 }
-document.getElementById('modalBg').addEventListener('click', e => { if (e.target === document.getElementById('modalBg')) closeModal(); });
+document.getElementById('modalBg').addEventListener('click',e=>{if(e.target===document.getElementById('modalBg'))closeModal();});
+function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2800);}
 
-function toast(msg) {
-  const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
-  document.body.appendChild(t); setTimeout(() => t.remove(), 2800);
-}
+// ── RECHERCHE ──
+document.getElementById('mainSearch').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
+function qs(term){document.getElementById('mainSearch').value=term;doSearch();}
 
-document.getElementById('mainSearch').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
-function q(term) { document.getElementById('mainSearch').value = term; doSearch(); }
-
-async function doSearch() {
-  const query = document.getElementById('mainSearch').value.trim();
-  if (!query) return;
+async function doSearch(){
+  const query=document.getElementById('mainSearch').value.trim();
+  if(!query)return;
   showView('search');
-  const sv = document.getElementById('searchView');
-  sv.innerHTML = `<div class="loading-wrap"><div class="spinner"></div><p>Recherche en cours...</p></div>`;
-
-  try {
-    const isBCE = /^[\d.\s]+$/.test(query) && query.replace(/[.\s]/g,'').length >= 9;
-    let url = isBCE
-      ? `/api/search?number=${query.replace(/[.\s]/g,'')}`
-      : `/api/search?q=${encodeURIComponent(query)}`;
-
-    const resp = await fetch(url);
-    if (!resp.ok) throw new Error(`Erreur ${resp.status}`);
-    const json = await resp.json();
-
-    // Normalise les résultats selon la source
-    let results = [];
-    if (json.data) {
-      if (Array.isArray(json.data)) {
-        results = json.data.map(normalise);
-      } else {
-        results = [normalise(json.data)];
-      }
-    }
-
-    renderList(results, query);
-  } catch(e) {
-    sv.innerHTML = `<div class="loading-wrap"><p style="color:#c0392b">Erreur : ${e.message}</p></div>`;
+  const sv=document.getElementById('searchView');
+  sv.innerHTML=`<div class="loading-wrap"><div class="spinner"></div><p>Recherche en cours...</p></div>`;
+  try{
+    const isBCE=/^[\d.\s]+$/.test(query)&&query.replace(/[.\s]/g,'').length>=9;
+    const url=isBCE?`/api/search?number=${query.replace(/[.\s]/g,'')}`:` /api/search?q=${encodeURIComponent(query)}`;
+    const resp=await fetch(url.trim());
+    if(!resp.ok)throw new Error(`Erreur ${resp.status}`);
+    const json=await resp.json();
+    // json.data est un tableau depuis Supabase
+    const raw=json.data||[];
+    const results=Array.isArray(raw)?raw:[raw];
+    renderList(results,query);
+  }catch(e){
+    sv.innerHTML=`<div class="loading-wrap"><p style="color:#c0392b">Erreur : ${e.message}</p></div>`;
   }
 }
 
-function normalise(co) {
-  if (!co) return {};
-  return {
-    name: co.nom || '—',
-    number: co.numero_bce || '',
-    type: co.forme_juridique || '',
-    status: co.statut || '',
-    address: co.rue || '',
-    city: co.commune || '',
-    zip: co.code_postal || '',
-    startDate: co.date_debut || '',
-    activities: [],
-    contacts: [],
-    raw: co
-  };
-}
-}
-
-function renderList(results, query) {
-  const sv = document.getElementById('searchView');
-  if (!results.length) {
-    sv.innerHTML = `<div class="empty-wrap"><div class="empty-icon">🔍</div><div class="empty-txt">Aucun résultat pour "<strong>${query}</strong>"</div></div>`;
+// ── LISTE ──
+function renderList(results,query){
+  const sv=document.getElementById('searchView');
+  const valid=results.filter(r=>r&&r.nom);
+  if(!valid.length){
+    sv.innerHTML=`<div class="empty-wrap"><div class="empty-icon">🔍</div><div class="empty-txt">Aucun résultat pour "<strong>${query}</strong>"<br><span style="font-size:13px">Essayez Colruyt, Proximus, ING...</span></div></div>`;
     return;
   }
-  sv.innerHTML = `
+  sv.innerHTML=`
     <div class="results-bar">
-      <div class="results-count"><strong>${results.length}</strong> résultat${results.length>1?'s':''} pour "${query}"</div>
+      <div class="results-count"><strong>${valid.length}</strong> résultat${valid.length>1?'s':''} pour "${query}"</div>
       <div style="font-size:11px;color:#ccc">Source : BCE officielle</div>
     </div>
     <div class="company-list">
-      ${results.map((co,i) => cardHTML(co,i)).join('')}
+      ${valid.map((co,i)=>cardHTML(co,i)).join('')}
     </div>`;
 }
 
-function cardHTML(co, i) {
-  const active = isActive(co.status);
+function cardHTML(co,i){
+  const active=(co.statut||'').toLowerCase().includes('actif')||(co.statut||'')==='';
   return `
-    <div class="company-card" style="animation-delay:${i*.04}s" onclick="openDetail('${esc(co.number)}','${esc(co.name)}', ${i})">
+    <div class="company-card" style="animation-delay:${i*.04}s" onclick="openDetail('${esc(co.numero_bce)}','${esc(co.nom)}')">
       <div style="flex:1;min-width:0">
-        <div class="card-name">${co.name}</div>
+        <div class="card-name">${co.nom}</div>
         <div class="card-meta">
-          ${co.number ? `<span class="meta-chip">BCE ${fmtBCE(co.number)}</span>` : ''}
-          ${co.type ? `<span class="meta-chip">· ${co.type}</span>` : ''}
-          ${co.city ? `<span class="meta-chip">· ${co.city}</span>` : ''}
-          ${co.startDate ? `<span class="meta-chip">· ${co.startDate}</span>` : ''}
+          ${co.numero_bce?`<span class="meta-chip">BCE ${fmtBCE(co.numero_bce)}</span>`:''}
+          ${co.forme_juridique?`<span class="meta-chip">· ${co.forme_juridique}</span>`:''}
+          ${co.commune?`<span class="meta-chip">· ${co.commune}</span>`:''}
+          ${co.date_debut?`<span class="meta-chip">· Fondée ${co.date_debut}</span>`:''}
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
-        <span class="status-badge ${active?'s-active':'s-inactive'}">${active?'Actif':(co.status||'Inconnu')}</span>
+        <span class="status-badge ${active?'s-active':'s-inactive'}">${active?'Actif':(co.statut||'Inconnu')}</span>
         <span class="card-arrow">›</span>
       </div>
     </div>`;
 }
 
-let cachedResults = [];
-
-async function openDetail(number, name, idx) {
+// ── DÉTAIL ──
+async function openDetail(number,name){
   showView('detail');
   window.scrollTo({top:0,behavior:'smooth'});
-  const dv = document.getElementById('detailView');
-  dv.innerHTML = `<div class="loading-wrap"><div class="spinner"></div><p>Chargement...</p></div>`;
-
-  try {
-    const [coResp, finResp] = await Promise.all([
-      fetch(`/api/search?number=${number}`).then(r => r.json()),
-      nbbKey ? fetch(`/api/financials?number=${number}`, { headers: { 'x-nbb-key': nbbKey } }).then(r => r.json()) : null
+  const dv=document.getElementById('detailView');
+  dv.innerHTML=`<div class="loading-wrap"><div class="spinner"></div><p>Chargement...</p></div>`;
+  try{
+    const [coResp,finResp]=await Promise.all([
+      fetch(`/api/search?number=${number}`).then(r=>r.json()),
+      nbbKey?fetch(`/api/financials?number=${number}`,{headers:{'x-nbb-key':nbbKey}}).then(r=>r.json()):null
     ]);
-
-    const co = normalise(coResp.data || {});
-    co.number = co.number || number;
-    co.name = co.name === '—' ? name : co.name;
-
-    renderDetail(co, finResp, number);
-  } catch(e) {
-    dv.innerHTML = `<button class="back-btn" onclick="goBack()">← Retour</button><div class="loading-wrap"><p style="color:#c0392b">Erreur : ${e.message}</p></div>`;
+    // Supabase retourne un tableau, on prend le premier
+    const raw=coResp.data;
+    const co=Array.isArray(raw)?raw[0]:raw;
+    renderDetail(co||{nom:name,numero_bce:number},finResp,number);
+  }catch(e){
+    dv.innerHTML=`<button class="back-btn" onclick="goBack()">← Retour</button><div class="loading-wrap"><p style="color:#c0392b">Erreur : ${e.message}</p></div>`;
   }
 }
 
-function renderDetail(co, finResp, number) {
-  const dv = document.getElementById('detailView');
-  const active = isActive(co.status);
-  const bceNum = (co.number||number).replace(/\D/g,'');
+function renderDetail(co,finResp,number){
+  const dv=document.getElementById('detailView');
+  const active=(co.statut||'').toLowerCase().includes('actif')||!co.statut;
+  const bceNum=(co.numero_bce||number).replace(/\D/g,'');
 
-  // Activités
-  const acts = co.activities || co.raw?.activities || [];
-  const actsHTML = acts.length ? acts.slice(0,3).map(a =>
-    `<div class="info-tr"><span class="i-l">${a.naceCode||''}</span><span class="i-r">${a.description||a.label||''}</span></div>`
-  ).join('') : '<div class="info-tr"><span class="i-l" style="color:#ccc">Non disponible</span></div>';
-
-  // Contacts
-  const contacts = co.raw?.contacts || [];
-  const emailContact = contacts.find(c => c.type === 'EMAIL' || c.contactType === 'EMAIL');
-  const webContact = contacts.find(c => c.type === 'WEB' || c.contactType === 'WEB');
-  const telContact = contacts.find(c => c.type === 'TEL' || c.contactType === 'TEL');
-
-  // Financials
-  let finHTML = '';
-  if (!nbbKey) {
-    finHTML = `<div class="warn-banner">
-      <div>⚡ <strong>Données financières disponibles</strong> — Activez votre clé BNB gratuite pour voir le CA et résultat net</div>
-      <button class="warn-btn" onclick="openModal()">Configurer →</button>
-    </div>`;
-  } else if (!finResp || !finResp.financials || !finResp.financials.length) {
-    finHTML = `<div class="section"><div class="sec-title">📊 Données financières</div><p style="color:#bbb;font-size:13px">Aucun compte annuel déposé à la BNB pour cette société.</p></div>`;
-  } else {
-    finHTML = renderFin(finResp.financials);
+  let finHTML='';
+  if(!nbbKey){
+    finHTML=`<div class="warn-banner"><div>⚡ <strong>Données financières disponibles</strong> — Activez votre clé BNB gratuite pour voir le CA et résultat net</div><button class="warn-btn" onclick="openModal()">Configurer →</button></div>`;
+  }else if(!finResp||!finResp.financials||!finResp.financials.length){
+    finHTML=`<div class="section"><div class="sec-title">📊 Données financières</div><p style="color:#bbb;font-size:13px">Aucun compte annuel déposé à la BNB.</p></div>`;
+  }else{
+    finHTML=renderFin(finResp.financials);
   }
 
-  dv.innerHTML = `
+  dv.innerHTML=`
     <button class="back-btn" onclick="goBack()">← Retour aux résultats</button>
     <div style="margin-bottom:24px">
-      <div class="detail-name">${co.name}</div>
+      <div class="detail-name">${co.nom||name}</div>
       <div class="detail-sub">
-        BCE ${fmtBCE(co.number||number)}
-        <span class="status-badge ${active?'s-active':'s-inactive'}">${active?'Actif':(co.status||'Actif')}</span>
-        ${co.type?`<span style="color:var(--muted)">${co.type}</span>`:''}
+        BCE ${fmtBCE(co.numero_bce||number)}
+        <span class="status-badge ${active?'s-active':'s-inactive'}">${active?'Actif':(co.statut||'Actif')}</span>
+        ${co.forme_juridique?`<span style="color:var(--muted)">${co.forme_juridique}</span>`:''}
       </div>
       <div class="detail-actions">
         <a class="action-btn" href="https://kbopub.economie.fgov.be/kbopub/zoeknummerform.html?nummer=${bceNum}" target="_blank">🏛️ BCE officiel</a>
         <a class="action-btn" href="https://www.nbb.be/fr/centrale-des-bilans/consulter-des-donnees/consult" target="_blank">📊 BNB Bilans</a>
         <a class="action-btn" href="https://www.ejustice.just.fgov.be/cgi_tsv/tsv_rech.pl?language=fr&btw=${bceNum}" target="_blank">📰 Moniteur Belge</a>
-        ${webContact?`<a class="action-btn" href="${webContact.value}" target="_blank">🌐 Site web</a>`:''}
       </div>
     </div>
 
     <div class="kpi-grid">
-      <div class="kpi-card" style="animation-delay:.05s">
+      <div class="kpi-card">
         <div class="kpi-bar"></div>
         <div class="kpi-label">Forme juridique</div>
-        <div class="kpi-val" style="font-size:18px">${co.type||'—'}</div>
+        <div class="kpi-val" style="font-size:18px">${co.forme_juridique||'—'}</div>
       </div>
-      <div class="kpi-card" style="animation-delay:.1s">
+      <div class="kpi-card">
         <div class="kpi-bar" style="background:var(--blue)"></div>
         <div class="kpi-label">Date de début</div>
-        <div class="kpi-val" style="font-size:18px">${co.startDate||'—'}</div>
+        <div class="kpi-val" style="font-size:18px">${co.date_debut||'—'}</div>
       </div>
-      <div class="kpi-card" style="animation-delay:.15s">
+      <div class="kpi-card">
         <div class="kpi-bar" style="background:var(--green)"></div>
         <div class="kpi-label">Statut</div>
         <div class="kpi-val" style="font-size:16px">${active?'✓ Actif':'✗ Inactif'}</div>
       </div>
-      <div class="kpi-card" style="animation-delay:.2s">
+      <div class="kpi-card">
         <div class="kpi-bar" style="background:var(--gold)"></div>
         <div class="kpi-label">Numéro BCE</div>
-        <div class="kpi-val" style="font-size:16px">${fmtBCE(co.number||number)}</div>
+        <div class="kpi-val" style="font-size:16px">${fmtBCE(co.numero_bce||number)}</div>
       </div>
     </div>
 
@@ -418,104 +326,61 @@ function renderDetail(co, finResp, number) {
     <div class="two-col">
       <div class="section">
         <div class="sec-title">📋 Informations générales</div>
-        <div class="info-tr"><span class="i-l">Nom officiel</span><span class="i-r">${co.name}</span></div>
-        <div class="info-tr"><span class="i-l">Numéro BCE</span><span class="i-r">${fmtBCE(co.number||number)}</span></div>
-        <div class="info-tr"><span class="i-l">Forme juridique</span><span class="i-r">${co.type||'—'}</span></div>
-        <div class="info-tr"><span class="i-l">Statut</span><span class="i-r">${co.status||'Actif'}</span></div>
-        <div class="info-tr"><span class="i-l">Date de début</span><span class="i-r">${co.startDate||'—'}</span></div>
-        ${telContact?`<div class="info-tr"><span class="i-l">Téléphone</span><span class="i-r">${telContact.value}</span></div>`:''}
-        ${emailContact?`<div class="info-tr"><span class="i-l">Email</span><span class="i-r">${emailContact.value}</span></div>`:''}
+        <div class="info-tr"><span class="i-l">Nom officiel</span><span class="i-r">${co.nom||'—'}</span></div>
+        <div class="info-tr"><span class="i-l">Numéro BCE</span><span class="i-r">${fmtBCE(co.numero_bce||number)}</span></div>
+        <div class="info-tr"><span class="i-l">Forme juridique</span><span class="i-r">${co.forme_juridique||'—'}</span></div>
+        <div class="info-tr"><span class="i-l">Statut</span><span class="i-r">${co.statut||'Actif'}</span></div>
+        <div class="info-tr"><span class="i-l">Date de début</span><span class="i-r">${co.date_debut||'—'}</span></div>
+        <div class="info-tr"><span class="i-l">Pays</span><span class="i-r">🇧🇪 Belgique</span></div>
       </div>
       <div class="section">
         <div class="sec-title">📍 Siège social</div>
-        ${co.address?`<div class="info-tr"><span class="i-l">Adresse</span><span class="i-r">${co.address}</span></div>`:''}
-        ${co.zip?`<div class="info-tr"><span class="i-l">Code postal</span><span class="i-r">${co.zip}</span></div>`:''}
-        ${co.city?`<div class="info-tr"><span class="i-l">Ville</span><span class="i-r">${co.city}</span></div>`:''}
+        ${co.rue?`<div class="info-tr"><span class="i-l">Rue</span><span class="i-r">${co.rue}</span></div>`:''}
+        ${co.code_postal?`<div class="info-tr"><span class="i-l">Code postal</span><span class="i-r">${co.code_postal}</span></div>`:''}
+        ${co.commune?`<div class="info-tr"><span class="i-l">Commune</span><span class="i-r">${co.commune}</span></div>`:''}
         <div class="info-tr"><span class="i-l">Pays</span><span class="i-r">🇧🇪 Belgique</span></div>
-        ${co.address?`<a href="https://www.google.com/maps/search/${encodeURIComponent(co.address+' '+co.city)}" target="_blank" class="action-btn" style="margin-top:14px;display:inline-flex">📍 Google Maps</a>`:''}
+        ${co.rue&&co.commune?`<a href="https://www.google.com/maps/search/${encodeURIComponent((co.rue||'')+' '+(co.commune||''))}" target="_blank" class="action-btn" style="margin-top:14px;display:inline-flex">📍 Google Maps</a>`:''}
       </div>
-    </div>
-
-    <div class="section">
-      <div class="sec-title">🏭 Activités (codes NACE)</div>
-      ${actsHTML}
     </div>`;
 }
 
-function renderFin(rawList) {
-  const list = rawList.map(item => parseDoc(item.ref, item.docData));
-  const latest = list[0];
-  const fmtM = v => {
-    if (v===null||isNaN(v)) return '—';
-    const a=Math.abs(v);
-    if(a>=1e9) return (v/1e9).toFixed(2)+' Md€';
-    if(a>=1e6) return (v/1e6).toFixed(2)+' M€';
-    if(a>=1e3) return (v/1e3).toFixed(0)+' K€';
-    return v.toFixed(0)+' €';
-  };
-  const {revenue:rev,netResult:net,equity:eq,totalAssets:assets,operatingResult:op} = latest;
-  const maxV = Math.max(Math.abs(rev||0),Math.abs(assets||0),1);
-  const pct = v => v?Math.min(100,Math.abs(v)/maxV*100):0;
-  const profit = net!==null&&net>=0;
-
-  const trendHTML = list.length>1 ? `
-    <div style="margin-top:20px">
-      <div class="sec-title" style="font-size:13px;margin-bottom:10px">Évolution sur ${list.length} exercices</div>
-      <div class="chart-bars">${list.map(d=>{
-        const rH=Math.min(100,(Math.abs(d.revenue||0)/Math.max(...list.map(x=>Math.abs(x.revenue||0)),1))*100);
-        const nH=Math.min(100,(Math.abs(d.netResult||0)/Math.max(...list.map(x=>Math.abs(x.netResult||0)),1))*100);
-        const pos=(d.netResult||0)>=0;
-        return `<div class="bar-col">
-          <div class="bar-outer"><div class="bar-inner bar-rev" style="height:${rH}%"></div></div>
-          <div class="bar-outer" style="margin-top:3px"><div class="bar-inner ${pos?'bar-profit':'bar-loss'}" style="height:${nH}%"></div></div>
-          <div class="bar-year">${d.year}</div>
-        </div>`;
-      }).join('')}</div>
-      <div class="chart-legend">
-        <div class="leg-item"><div class="leg-dot" style="background:#2980b9"></div>CA</div>
-        <div class="leg-item"><div class="leg-dot" style="background:#27ae60"></div>Résultat net (+)</div>
-        <div class="leg-item"><div class="leg-dot" style="background:#c0392b"></div>Résultat net (–)</div>
-      </div>
-    </div>` : '';
-
-  return `<div class="section">
+// ── FINANCIALS ──
+function renderFin(rawList){
+  const list=rawList.map(item=>parseDoc(item.ref,item.docData));
+  const latest=list[0];
+  const fmtM=v=>{if(v===null||isNaN(v))return'—';const a=Math.abs(v);if(a>=1e9)return(v/1e9).toFixed(2)+' Md€';if(a>=1e6)return(v/1e6).toFixed(2)+' M€';if(a>=1e3)return(v/1e3).toFixed(0)+' K€';return v.toFixed(0)+' €';};
+  const{revenue:rev,netResult:net,equity:eq,totalAssets:assets}=latest;
+  const maxV=Math.max(Math.abs(rev||0),Math.abs(assets||0),1);
+  const pct=v=>v?Math.min(100,Math.abs(v)/maxV*100):0;
+  const profit=net!==null&&net>=0;
+  return`<div class="section">
     <div class="sec-title">📈 Données financières (BNB) <span class="sec-badge">Exercice ${latest.year}</span></div>
     <div class="kpi-grid" style="margin-bottom:24px">
-      <div class="kpi-card"><div class="kpi-bar" style="background:var(--blue)"></div><div class="kpi-label">Chiffre d'affaires</div><div class="kpi-val c-blue">${fmtM(rev)}</div><div class="kpi-sub">Rubrique 70</div></div>
-      <div class="kpi-card"><div class="kpi-bar" style="background:${profit?'var(--green)':'var(--accent)'}"></div><div class="kpi-label">Résultat net</div><div class="kpi-val ${profit?'c-green':'c-red'}">${fmtM(net)}</div><div class="kpi-sub">Rubrique 9904</div></div>
+      <div class="kpi-card"><div class="kpi-bar" style="background:var(--blue)"></div><div class="kpi-label">Chiffre d'affaires</div><div class="kpi-val c-blue">${fmtM(rev)}</div></div>
+      <div class="kpi-card"><div class="kpi-bar" style="background:${profit?'var(--green)':'var(--accent)'}"></div><div class="kpi-label">Résultat net</div><div class="kpi-val ${profit?'c-green':'c-red'}">${fmtM(net)}</div></div>
       <div class="kpi-card"><div class="kpi-bar" style="background:var(--gold)"></div><div class="kpi-label">Fonds propres</div><div class="kpi-val">${fmtM(eq)}</div></div>
       <div class="kpi-card"><div class="kpi-bar"></div><div class="kpi-label">Total du bilan</div><div class="kpi-val">${fmtM(assets)}</div></div>
     </div>
     ${rev!==null?`<div class="fin-row"><div class="fin-lbl">Chiffre d'affaires</div><div class="fin-bar-bg"><div class="fin-bar-fill fin-bar-pos" style="width:${pct(rev)}%"></div></div><div class="fin-val">${fmtM(rev)}</div></div>`:''}
-    ${op!==null?`<div class="fin-row"><div class="fin-lbl">Résultat d'exploitation</div><div class="fin-bar-bg"><div class="fin-bar-fill ${op>=0?'fin-bar-pos':'fin-bar-neg'}" style="width:${pct(op)}%"></div></div><div class="fin-val ${op>=0?'c-green':'c-red'}">${fmtM(op)}</div></div>`:''}
     ${net!==null?`<div class="fin-row"><div class="fin-lbl">Résultat net</div><div class="fin-bar-bg"><div class="fin-bar-fill ${profit?'fin-bar-pos':'fin-bar-neg'}" style="width:${pct(net)}%"></div></div><div class="fin-val ${profit?'c-green':'c-red'}">${fmtM(net)}</div></div>`:''}
     ${eq!==null?`<div class="fin-row"><div class="fin-lbl">Fonds propres</div><div class="fin-bar-bg"><div class="fin-bar-fill fin-bar-pos" style="width:${pct(eq)}%"></div></div><div class="fin-val">${fmtM(eq)}</div></div>`:''}
     ${assets!==null?`<div class="fin-row"><div class="fin-lbl">Total du bilan</div><div class="fin-bar-bg"><div class="fin-bar-fill fin-bar-pos" style="width:100%"></div></div><div class="fin-val">${fmtM(assets)}</div></div>`:''}
-    ${trendHTML}
     <div style="font-size:11px;color:#bbb;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">Source : Banque Nationale de Belgique · Centrale des Bilans.</div>
   </div>`;
 }
 
-function parseDoc(ref, doc) {
+function parseDoc(ref,doc){
   const data={};
-  const items=doc.accountingData||doc.data||[];
-  items.forEach(item=>{const r=(item.rubric||item.code||'').toString().trim();const v=parseFloat(item.value||item.amount||0);if(r)data[r]=v;});
+  (doc.accountingData||doc.data||[]).forEach(item=>{const r=(item.rubric||item.code||'').toString().trim();const v=parseFloat(item.value||item.amount||0);if(r)data[r]=v;});
   const get=(...keys)=>{for(const k of keys){if(data[k]!==undefined&&!isNaN(data[k]))return data[k];}return null;};
-  return {
-    year:ref.fiscalYear||ref.exerciceYear||(ref.closingDate||'').substring(0,4)||'—',
-    revenue:get('70','700','70/76A'),
-    netResult:get('9904','9905'),
-    equity:get('10/15','10','14'),
-    totalAssets:get('20/58','20','29/58'),
-    operatingResult:get('9901','9903'),
-  };
+  return{year:ref.fiscalYear||ref.exerciceYear||(ref.closingDate||'').substring(0,4)||'—',revenue:get('70','700'),netResult:get('9904','9905'),equity:get('10/15','10'),totalAssets:get('20/58','20')};
 }
 
+// ── NAVIGATION ──
 function showView(v){document.getElementById('searchView').classList.toggle('hidden',v!=='search');document.getElementById('detailView').classList.toggle('hidden',v!=='detail');}
 function goBack(){showView('search');window.scrollTo({top:0,behavior:'smooth'});}
 function fmtBCE(n){if(!n)return'';const d=n.replace(/\D/g,'');return d.length>=10?`${d.slice(0,4)}.${d.slice(4,7)}.${d.slice(7,10)}`:n;}
 function esc(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');}
-function isActive(s){if(!s)return true;const l=s.toLowerCase();return l.includes('active')||l.includes('actif')||l==='actif';}
 </script>
 </body>
 </html>
