@@ -9,23 +9,24 @@ export default async function handler(req, res) {
   try {
     let url;
     if (number) {
-      url = `https://api.opencorporates.com/v0.4/companies/be/${encodeURIComponent(number)}?sparse=false`;
+      const num = number.replace(/\D/g, '');
+      url = `https://cbeapi.be/api/v1/enterprise/${num}`;
     } else if (q) {
-      url = `https://api.opencorporates.com/v0.4/companies/search?q=${encodeURIComponent(q)}&jurisdiction_code=be&per_page=15`;
+      url = `https://cbeapi.be/api/v1/search?name=${encodeURIComponent(q)}&limit=15`;
     } else {
-      return res.status(400).json({ error: 'Paramètre q ou number requis' });
+      return res.status(400).json({ error: 'Paramètre requis' });
     }
 
     const response = await fetch(url, {
-      headers: { 'User-Agent': 'BelgInfo/1.0' }
+      headers: { 'Accept': 'application/json' }
     });
 
     if (!response.ok) {
-      return res.status(response.status).json({ error: `Erreur API: ${response.status}` });
+      return res.status(response.status).json({ error: `Erreur ${response.status}` });
     }
 
     const data = await response.json();
-    return res.status(200).json(data);
+    return res.status(200).json({ source: 'cbe', data });
 
   } catch (err) {
     return res.status(500).json({ error: err.message });
