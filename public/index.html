@@ -268,18 +268,19 @@ async function doSearch() {
 function normalise(co) {
   if (!co) return {};
   return {
-    name: co.denomination || co.name || co.enterpriseName || '—',
-    number: co.enterpriseNumber || co.number || co.vat || '',
-    type: co.juridicalForm || co.legalForm || co.type || '',
-    status: co.enterpriseStatus || co.status || '',
-    address: co.address || co.registeredAddress || '',
-    city: co.municipality || co.city || '',
-    zip: co.zipCode || co.postalCode || '',
-    startDate: co.startDate || co.incorporationDate || '',
-    activities: co.activities || [],
-    contacts: co.contacts || [],
+    name: co.nom || '—',
+    number: co.numero_bce || '',
+    type: co.forme_juridique || '',
+    status: co.statut || '',
+    address: co.rue || '',
+    city: co.commune || '',
+    zip: co.code_postal || '',
+    startDate: co.date_debut || '',
+    activities: [],
+    contacts: [],
     raw: co
   };
+}
 }
 
 function renderList(results, query) {
