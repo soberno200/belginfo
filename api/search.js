@@ -8,17 +8,19 @@ export default async function handler(req, res) {
 
   try {
     let url;
-    if (number) {
-      const num = number.replace(/\D/g, '');
-      url = `https://cbeapi.be/api/v1/enterprise/${num}`;
+    const num = (number || q || '').replace(/\D/g, '');
+    const isNumber = /^\d{9,10}$/.test(num);
+
+    if (isNumber) {
+      url = `https://lookup.guru/be/${num}`;
     } else if (q) {
-      url = `https://cbeapi.be/api/v1/search?name=${encodeURIComponent(q)}&limit=15`;
+      url = `https://api.entreprises.gouv.be/v3/unites_legales?q=${encodeURIComponent(q)}&nombre=15`;
     } else {
       return res.status(400).json({ error: 'Paramètre requis' });
     }
 
     const response = await fetch(url, {
-      headers: { 'Accept': 'application/json' }
+      headers: { 'Accept': 'application/json', 'User-Agent': 'BelgInfo/1.0' }
     });
 
     if (!response.ok) {
@@ -26,7 +28,7 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-    return res.status(200).json({ source: 'cbe', data });
+    return res.status(200).json({ source: 'lookup', data });
 
   } catch (err) {
     return res.status(500).json({ error: err.message });
